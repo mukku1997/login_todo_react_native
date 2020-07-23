@@ -1,10 +1,11 @@
 import React from 'react';
-import { Text, View, SafeAreaView } from 'react-native';
+import { Text } from 'react-native';
 
-export default function App() {
+function App() {
+
   return (
-    <SafeAreaView>
-      <Text>Hello world!</Text>
-    </SafeAreaView>
+    <Text>hiii</Text>
   );
 }
+
+export default App;
