@@ -1,29 +1,37 @@
 import  React, { useState, useEffect }  from "react";
-import { Text, View, StyleSheet, FlatList } from "react-native";
-import { getdata, getItem } from "./Store";
+import { Text, View, StyleSheet, FlatList, TouchableOpacity } from "react-native";
+import { getValue, getItemFromDB, removeUserName } from "./Store";
 import TodoItem from "./TodoItem";
 import TodoAddItem from "./TodoAddItem";
 
-const Todo = () =>{
+const Todo = ({navigation}) =>{
 
       const [email, setEmail] = useState("");
       const [items, setItems] = useState([]);
 
+      
 
       useEffect( ()=>{
            username_exists();
            loadItems();
+           navigation.setOptions({
+            headerRight : ()=>(
+              <TouchableOpacity style={style.logout} onPress={()=>Logout()}>
+                <Text>Logout</Text>
+              </TouchableOpacity>
+            )
+          });
       },[]);
 
       const loadItems = async ()=>{
-            let data = await getItem();
+            let data = await getItemFromDB();
             setItems(data);
             console.log("calling load")
       }
 
       const display_items = ()=>{
             // console.log(items)
-            if (items.length > 0)
+            if (items && items.length > 0)
             {
                   return (<FlatList
                   style={{width:"100%"}}
@@ -39,14 +47,27 @@ const Todo = () =>{
       }
       
       const username_exists = async ()=>{
-            const username = await getdata("username"); //getdata("username");
+            const username = await getValue("username"); //getValue("username");
             if(username)
             {
                   console.log(username)
                  setEmail(username);
+            }else{
+                  navigation.navigate('Login');
             }
       }
 
+      const  Logout = () =>
+      {
+            try {      
+                  console.log("logout");
+                  removeUserName("username");
+                  navigation.navigate('Login');
+                  
+            } catch (error) {
+                  
+            }        
+      }
       return (
             <View style={{ flex: 1, alignItems: 'center', justifyContent: 'flex-start' }}>
             {/* <TodoItem></TodoItem> */}
@@ -71,8 +92,13 @@ const style = StyleSheet.create({
             width:"100%",
             borderRadius:100,
       },
-      
-});
-
+      logout:{
+        marginTop:10,
+        marginRight:15,
+        backgroundColor:"#eee",
+        padding:10,
+        borderRadius:10
+      }
+    }); 
 
 export default Todo;

@@ -3,7 +3,7 @@ import { AsyncStorage } from 'react-native'
 
 
 
-      export   function storedata(key,value) {
+      export   function setUserName(key,value) {
             try {
                    AsyncStorage.setItem(key,value);
             } catch (error) {
@@ -11,18 +11,25 @@ import { AsyncStorage } from 'react-native'
             }
       };
 
-      export  function getdata(key){
+      export  function getValue(key){
             try {
                   return  AsyncStorage.getItem(key);
             } catch (error) {
                   return null;
             }
       };
+      export  function removeUserName(key){
+            try {
+                  return  AsyncStorage.removeItem(key);
+            } catch (error) {
+                  return null;
+            }
+      };
 
-      export  async function storeItem(value) {
+      export  async function addItemInDB(value) {
             try {
                   let arr = [];
-                  let data = await getdata("item");
+                  let data = await getValue("item");
                   data = JSON.parse(data);
                   if(data){
                         arr = arr.concat(data);
@@ -34,10 +41,10 @@ import { AsyncStorage } from 'react-native'
             }
       };
 
-      export async function getItem()
+      export async function getItemFromDB()
       {
             try {
-                  let data = await getdata("item");
+                  let data = await getValue("item");
                   return JSON.parse(data);
             } catch (error) {
                   return null;
@@ -48,7 +55,7 @@ import { AsyncStorage } from 'react-native'
       {
             try {
                   let arr = [];
-                  let data = await getdata("item");
+                  let data = await getValue("item");
                   data = JSON.parse(data);
                   data.splice(index,1);
                   console.log(data);

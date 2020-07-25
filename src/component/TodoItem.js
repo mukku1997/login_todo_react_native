@@ -44,11 +44,11 @@ const style = StyleSheet.create({
             marginLeft:20
       },
       container:{
-            width:"95%",
+            width:"96%",
             borderWidth:0.5,
             borderStyle:"solid",
             borderColor:"#ccc",
-            marginHorizontal:2,
+            marginHorizontal:"2%",
             marginVertical:5,
             borderRadius:30,
 

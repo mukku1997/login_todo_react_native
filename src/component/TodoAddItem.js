@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
-import {TextInput, View, StyleSheet,Button,TouchableOpacity,Image} from 'react-native'
-import { storeItem, getdata } from "./Store";
+import {TextInput, View, StyleSheet,TouchableOpacity,Image} from 'react-native'
+import { addItemInDB } from "./Store";
 
 const TodoAddItem = (props) =>{
 
@@ -11,7 +11,7 @@ const TodoAddItem = (props) =>{
       const AddItem=async ()=>{
             if(item)
             {
-                  await storeItem(item);
+                  await addItemInDB(item);
                   alert(item+"\nAdded Successfully.");
                   props.load();
                   setItem("");
