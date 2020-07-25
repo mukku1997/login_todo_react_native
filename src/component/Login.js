@@ -1,12 +1,28 @@
-import  React,{ useState }  from "react";
-import { Text, View ,TextInput, Button, StyleSheet} from "react-native";
+import  React,{ useState, useEffect }  from "react";
+import { Text, View ,TextInput, Button, StyleSheet, AsyncStorage, Alert } from "react-native";
+import {getdata, storedata} from "./Store"
 
 const Login = ({navigation}) =>{
       const [email, setEmail] = useState("");
 
-      const login = ()=>
+     
+      useEffect(  ()=>{
+            username_exists();
+       },[]);
+ 
+     
+      const username_exists = async ()=>{
+            const username = await getdata("username"); 
+            if(username)
+            {
+                  navigation.navigate('Todo');
+            }
+      }
+
+
+      const login =()=>
       {
-            alert("hello world!"+email);
+            storedata(key = "username", email);
             navigation.navigate('Todo');
       }
 
